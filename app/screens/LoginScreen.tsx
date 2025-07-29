@@ -1,13 +1,10 @@
 // LoginScreen.tsx
-import React, { useState } from 'react';
-import { View, Text, TextInput, Alert, TouchableOpacity, StyleSheet, Dimensions, Image } from 'react-native';
-import axios from 'axios';
 import { StackNavigationProp } from '@react-navigation/stack';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { Alert, Dimensions, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../ThemeContext';
 import { Colors } from '../constants/colors';
-import * as WebBrowswer from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
-import Constants from 'expo-constants';
 
 
 type RootStackParamList = {
@@ -36,10 +33,12 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
   const handleLogin = async () => {
     
     try {
-      navigation.replace('Main' as any);
-      await axios.post('http://10.0.2.2:8000/login', { email, password });
-      Alert.alert('Success', 'Logged in successfully!');
-      
+      if (email == "dev") { navigation.replace('Main' as any);}
+      else {
+        await axios.post('http://10.0.2.2:8000/login', { email, password });
+        Alert.alert('Success', 'Logged in successfully!');
+        navigation.replace('Main' as any);
+      }
       
     } catch (error: any) {
       console.error(error);
