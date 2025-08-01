@@ -16,6 +16,7 @@ interface Profile {
 // A local placeholder image is required in your project's asset folder
 const placeholderImage = require('../../assets/images/adaptive-icon.png');
 
+
 const HomeScreen: React.FC = () => {
   // --- State Management ---
   const [profiles] = useState<Profile[]>([
@@ -176,9 +177,11 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   nopeButton: {
+    backgroundColor: '#ff6b6b',
     // backgroundColor is now set dynamically via theme
   },
   likeButton: {
+    backgroundColor: '#6bff6b',
     // backgroundColor is now set dynamically via theme
   },
   buttonText: {
