@@ -35,7 +35,6 @@ def sign_up(user: UserSignUp):
     try:
         # Create a new user using Firebase Authentication.
         firebase_user = auth_client.create_user(
-            phone=user.phone,
             email=user.email,
             password=user.password,
         )

@@ -1,26 +1,26 @@
 // EmailValidScreen.tsx
 
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import axios from 'axios';
 import React, { useState } from 'react';
 import {
-  View,
+  Alert,
+  Dimensions,
+  StyleSheet,
   Text,
   TextInput,
-  Alert,
   TouchableOpacity,
-  StyleSheet,
-  Dimensions,
+  View,
 } from 'react-native';
-import axios from 'axios';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { useTheme } from '../ThemeContext';
 import { Colors } from '../constants/colors';
-import { useRoute, RouteProp } from '@react-navigation/native';
 
 type AuthStackParamList = {
   Login: undefined;
   SignUp: undefined;
-  Email: { email: string };
-  Phone: undefined;
+  Email: { email: string; phone: string };
+  Phone: { phone: string };
 };
 
 type Props = {
@@ -35,6 +35,7 @@ const EmailValidScreen: React.FC<Props> = ({ navigation }) => {
   const { darkModeEnabled } = useTheme();
   const themeColors = darkModeEnabled ? Colors.dark : Colors.light;
   const [email] = useState(route.params.email);
+  const [phoneNumber] = useState(route.params.phone);
   const [code, setCode] = useState('');
 
   //const resendEmail TODO: create resend email function
@@ -43,7 +44,7 @@ const EmailValidScreen: React.FC<Props> = ({ navigation }) => {
       // Adjust this endpoint to whatever your backend expects
       await axios.post('http://10.0.2.2:8000/email-valid', { email, code });
       Alert.alert('Success','Email verified!');
-      navigation.navigate("Phone");
+      navigation.navigate("Phone", {phone: phoneNumber});
     } catch (error: any) {
       console.error(error);
       const errorMsg =
@@ -81,7 +82,7 @@ const EmailValidScreen: React.FC<Props> = ({ navigation }) => {
                 >
                   <Text style={styles.sendButtonText}>Verify Email</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Phone")}>
+        <TouchableOpacity onPress={() => navigation.navigate("Phone", { phone: phoneNumber})}>
           <Text style={[styles.backText, { color: themeColors.text }]}>
             ← Back to Signup
           </Text>

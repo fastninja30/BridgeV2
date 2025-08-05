@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, StyleSheet, Alert, Dimensions } from 'react-native';
-import axios from 'axios';
 import { StackNavigationProp } from '@react-navigation/stack';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { Alert, Dimensions, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useTheme } from '../ThemeContext';
 import { Colors } from '../constants/colors';
 
@@ -9,7 +9,7 @@ type RootStackParamList = {
   SignUp: undefined;
   Login: undefined; 
   Phone: { phone: string};
-  Email: { email: string };
+  Email: { email: string; phone: string };
 };
 
 type SignUpScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SignUp'>;
@@ -39,7 +39,7 @@ const SignUpScreen: React.FC<Props> = ({ navigation }) => {
       await axios.post('http://10.0.2.2:8000/signup', { phone, email, password });
       Alert.alert('Success', 'User created successfully!');
       // Navigate to the email screen after signup
-      navigation.navigate('Email', { email: email });
+      navigation.navigate('Email', { email: email, phone: phone});
     } catch (error: any) {
       console.error(error);
       const errorMsg =
