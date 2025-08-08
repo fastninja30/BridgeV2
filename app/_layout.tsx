@@ -1,29 +1,30 @@
-import React from 'react';
+import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
-import { View, StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
 // Import the Colors constants file
 import { Colors } from './constants/colors';
 
 // Theme and Matches Contexts
-import { ThemeProvider, useTheme } from './ThemeContext';
 import { MatchesProvider } from './MatchesContext';
+import { ThemeProvider, useTheme } from './ThemeContext';
 
 // Screens
-import HomeScreen from './screens/HomeScreen';
-import MatchesScreen from './screens/MatchesScreen';
+import AccountSettingsScreen from './screens/AccountSettingsScreen';
 import ChatScreen from './screens/ChatScreen';
+import EditProfileScreen from './screens/EditProfile';
+import EmailValidScreen from './screens/EmailValidScreen';
+import ForgetPasswordScreen from './screens/ForgetPasswordScreen';
+import HomeScreen from './screens/HomeScreen';
+import LoginScreen from './screens/LoginScreen';
+import MatchesScreen from './screens/MatchesScreen';
+import PhoneValidScreen from './screens/PhoneValidScreen';
+import PrivacySettingsScreen from './screens/PrivacySettingsScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SettingsScreen from './screens/SettingsScreen';
-import PrivacySettingsScreen from './screens/PrivacySettingsScreen';
-import AccountSettingsScreen from './screens/AccountSettingsScreen';
 import SignUpScreen from './screens/SignUpScreen';
-import LoginScreen from './screens/LoginScreen';
-import ForgetPasswordScreen from './screens/ForgetPasswordScreen';
-import EmailValidScreen from './screens/EmailValidScreen';
-import PhoneValidScreen from './screens/PhoneValidScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -89,7 +90,6 @@ function SettingsStack() {
           title: 'Account Settings',
           headerStyle: {
             backgroundColor: themeColors.tabBackground,
-            // optional: remove shadow to match your other headers
             borderBottomWidth: 0,
             elevation: 0,
             shadowOpacity: 0,
@@ -138,7 +138,7 @@ function AppNavigator() {
         <Tab.Screen name="Home" component={HomeScreen} options={{ title: 'Discover' , headerShadowVisible: false}} />
         <Tab.Screen name="Matches" component={MatchesScreen} options={{ title: 'Matches' , headerShadowVisible: false}} />
         <Tab.Screen name="Chat" component={ChatStack} options={{ title: 'Chat' , headerShadowVisible: false}} />
-        <Tab.Screen name="Profile" component={ProfileScreen} options={{ title: 'Profile' , headerShadowVisible: false}} />
+        <Tab.Screen name="Profile" component={ProfileStack} options={{ title: 'Profile' , headerShadowVisible: false}} />
         <Tab.Screen name="Settings" component={SettingsStack} options={{ title: 'Settings' , headerShadowVisible: false}} />
       </Tab.Navigator>
     </View>
@@ -174,6 +174,34 @@ function AuthStack() {
         name="Phone"
         component={PhoneValidScreen}
         options={{ headerShown:false }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+
+function ProfileStack() {
+  const { darkModeEnabled } = useTheme();
+  const themeColors = darkModeEnabled ? Colors.dark : Colors.light;
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{ headerShown: false }} 
+      />
+      <Stack.Screen
+        name="Edit"
+        component={EditProfileScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: themeColors.tabBackground,
+            borderBottomWidth: 0,
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+          headerTintColor: themeColors.text,
+        }}
       />
     </Stack.Navigator>
   );
