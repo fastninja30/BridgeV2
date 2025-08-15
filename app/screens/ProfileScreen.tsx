@@ -8,8 +8,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useTheme } from '../ThemeContext';
 import { Colors } from '../constants/colors';
+import { useTheme } from '../ThemeContext';
+import { useUser } from '../UserContext';
 
 type ProfileStackParamList = {
   Profile: undefined;
@@ -26,13 +27,7 @@ const ProfileScreen: React.FC<Props> = ({ navigation }) => {
   const { darkModeEnabled } = useTheme();
   const themeColors = darkModeEnabled ? Colors.dark : Colors.light;
 
-  // Dummy user profile data
-  const user = {
-    name: 'John Doe',
-    age: 23,
-    bio: 'Adventure seeker and coffee lover. Always up for a good conversation!',
-    // photos aren’t needed any more since we always show the placeholder
-  };
+  const { user } = useUser();
 
   return (
     <ScrollView

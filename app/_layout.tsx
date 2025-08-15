@@ -229,15 +229,20 @@ function RootNavigator() {
 }
 
 // Main App Layout wrapped with Theme and Matches Providers
+import { UserProvider } from './UserContext';
+
 export default function AppLayout() {
   return (
     <ThemeProvider>
       <MatchesProvider>
-        <RootNavigator />
+        <UserProvider>
+          <RootNavigator />
+        </UserProvider>
       </MatchesProvider>
     </ThemeProvider>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
